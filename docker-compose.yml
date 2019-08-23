@@ -1,0 +1,41 @@
+version: '3.7'
+
+services: 
+
+  db:
+    image: mysql
+    container_name: mysql_my_container
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: lamp
+      MYSQL_USER: lamp_user
+      MYSQL_PASSWORD: lamp_pass
+      MYSQL_ROOT_PASSWORD: programadorabordo
+    ports:
+      - "3360:3360"
+    volumes:
+       - ./api/db/data:/var/lib/mysql
+    restart: always
+  
+  #api:
+   # build: "./api"
+    #container_name: node_container
+    #restart: always
+    #volumes:
+      #- ./api:/home/node/app
+    #ports:
+      #- "9001:9001"
+    #depends_on:
+      #- db
+  
+  
+  web:
+    image: "php:7.2-apache"
+    container_name: php-my_container
+    restart: always
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - "8888:80"
+    #depends_on:
+      #- api
